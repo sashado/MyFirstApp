@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MyFirstApp</string>
-    <string name="student_info">Студент: Добров\nГруппа: 3.2.ИСиП-1</string>
+    <string name="main_text">My First Application</string>
+    <string name="student_info">Student: Dobrov\nGroup: 3.2.ISaP-1</string>
 </resources>
