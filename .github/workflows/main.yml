@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: 'day2'
+    branches: 'day3'
   pull_request:
-    branches: 'day2'
+    branches: 'day3'
 
 jobs:
   build:
