@@ -3,4 +3,16 @@
     <string name="app_name">МоёПервоеПриложение</string>
     <string name="main_text">Моё первое приложение</string>
     <string name="student_info">Студент: Добров\nГруппа: 3.2.ИСиП-1</string>
+    <string name="avatar_description">Аватар автора</string>
+    <string name="menu_description">Меню</string>
+
+    <string name="like_description">Нравится</string>
+    <string name="share_description">Поделиться</string>
+    <string name="views_description">Просмотры</string>
+
+    <string name="netology_head">Нетология. Университет интернет-профессий</string>
+    <string name="netology_description">Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов.</string>
+    <string name="netology_date">21 мая в 18:36</string>
+
+    <string name="url_name">Новая Нетология: 4 уровня карьеры</string>
 </resources>
