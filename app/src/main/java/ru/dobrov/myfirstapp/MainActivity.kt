@@ -1,39 +1,49 @@
 package ru.dobrov.myfirstapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import ru.dobrov.myfirstapp.databinding.ActivityMainBinding
 import ru.dobrov.myfirstapp.dto.Post
 import ru.dobrov.myfirstapp.util.FormatUtils
-import java.text.DecimalFormat
+import ru.dobrov.myfirstapp.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
-    private lateinit var post: Post
-
+    private val viewModel: PostViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("Activity: onCreate")
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-
         setContentView(binding.root)
-        post = Post(
-            id = 1,
-            author = getString(R.string.netology_head),
-            content = getString(R.string.netology_description),
-            published = getString(R.string.netology_date),
-            likedByMe = false,
-            likes = 1_000_000,
-            shares = 25,
-            views = 5700
-        )
-        bindPost(post)
+        viewModel.data.observe(this) { post ->
+            bindPost(post)
+        }
         setupClickListeners()
     }
 
+    override fun onStart() {
+        super.onStart()
+        println("Activity: onStart")
+    }
+    override fun onResume() {
+        super.onResume()
+        println("Activity: onResume")
+    }
+    override fun onPause() {
+        super.onPause()
+        println("Activity: onPause")
+    }
+    override fun onStop() {
+        super.onStop()
+        println("Activity: onStop")
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        println("Activity: onDestroy")
+    }
     private fun bindPost(post: Post) {
         binding.apply {
             author.text = post.author
@@ -49,30 +59,18 @@ class MainActivity : AppCompatActivity() {
             else
                 like.setImageResource(R.drawable.ic_favorite_border)
 
-            linkTitle.text = getString(R.string.url_name)
+            linkTitle.text = "Новая Нетология: 4 уровня карьеры"
             linkUrl.text = "netology.ru"
         }
     }
-
     private fun setupClickListeners() {
         binding.apply {
             like.setOnClickListener {
-                post = post.copy(
-                    likedByMe = !post.likedByMe,
-                    likes = if (post.likedByMe) post.likes - 1 else post.likes + 1
-                )
-                bindPost(post)
-                Toast.makeText(
-                    this@MainActivity,
-                    if (post.likedByMe) "Лайк поставлен" else "Лайк убран",
-                    Toast.LENGTH_SHORT
-                ).show()
+                viewModel.like()
+                Toast.makeText(this@MainActivity, "Лайк", Toast.LENGTH_SHORT).show()
             }
             share.setOnClickListener {
-                post = post.copy(
-                    shares = post.shares + 1
-                )
-                bindPost(post)
+                viewModel.share()
                 Toast.makeText(this@MainActivity, "Репост +1", Toast.LENGTH_SHORT).show()
             }
 
@@ -81,6 +79,7 @@ class MainActivity : AppCompatActivity() {
             }
             avatar.setOnClickListener {
                 Toast.makeText(this@MainActivity, "Профиль автора", Toast.LENGTH_SHORT).show()
+                viewModel.increaseViews()
             }
             root.setOnClickListener {
                 println("CLICK: корневой layout")

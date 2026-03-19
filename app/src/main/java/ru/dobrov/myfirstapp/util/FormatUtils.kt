@@ -3,7 +3,7 @@ package ru.dobrov.myfirstapp.util
 import java.text.DecimalFormat
 
 object FormatUtils {
-    public fun formatCount(count: Int): String {
+    fun formatCount(count: Int): String {
         return when {
             count >= 1_000_000 -> {
                 val millions = count / 1_000_000.0
