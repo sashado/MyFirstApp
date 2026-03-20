@@ -7,18 +7,11 @@ import ru.dobrov.myfirstapp.repository.PostRepository
 import ru.dobrov.myfirstapp.repository.PostRepositoryInMemoryImpl
 
 class PostViewModel : ViewModel() {
-    init {
-        println("ViewModel: created")
-    }
-    override fun onCleared() {
-        super.onCleared()
-        println("ViewModel: cleared")
-    }
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
 
-    val data: LiveData<Post> = repository.get()
+    val data: LiveData<List<Post>> = repository.getAll()
+    fun likeById(id: Long) = repository.likeById(id)
 
-    fun like() = repository.like()
-    fun share() = repository.share()
-    fun increaseViews() = repository.increaseViews()
+    fun shareById(id: Long) = repository.shareById(id)
+    fun increaseViews(id: Long) = repository.increaseViews(id)
 }
