@@ -1,6 +1,9 @@
 package ru.dobrov.myfirstapp.util
 
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object FormatUtils {
     fun formatCount(count: Int): String {
@@ -24,5 +27,9 @@ object FormatUtils {
             }
             else -> count.toString()
         }
+    }
+    fun formatDate(date: Date): String {
+        val format = SimpleDateFormat("d MMM в HH:mm", Locale("ru"))
+        return format.format(date)
     }
 }

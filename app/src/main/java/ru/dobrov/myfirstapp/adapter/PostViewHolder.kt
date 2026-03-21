@@ -1,5 +1,7 @@
 package ru.dobrov.myfirstapp.adapter
 
+import android.view.View
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.dobrov.myfirstapp.R
 import ru.dobrov.myfirstapp.databinding.CardPostBinding
@@ -7,9 +9,9 @@ import ru.dobrov.myfirstapp.dto.Post
 import ru.dobrov.myfirstapp.util.FormatUtils
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val onLikeClickListener: (Post) -> Unit,
-    private val onShareClickListener: (Post) -> Unit
+    private val listener: OnPostInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
+
     fun bind(post: Post) {
         binding.apply {
             author.text = post.author
@@ -20,25 +22,46 @@ class PostViewHolder(
             shareCount.text = FormatUtils.formatCount(post.shares)
             viewsCount.text = FormatUtils.formatCount(post.views)
 
-            if (post.likedByMe) like.setImageResource(R.drawable.ic_favorite)
-            else like.setImageResource(R.drawable.ic_favorite_border)
+            like.setImageResource(
+                if (post.likedByMe)
+                    R.drawable.ic_favorite
+                else
+                    R.drawable.ic_favorite_border
+            )
+            like.setOnClickListener {
+                listener.onLike(post)
+            }
 
-            like.setOnClickListener { onLikeClickListener(post) }
-            share.setOnClickListener { onShareClickListener(post) }
-            menu.setOnClickListener {
-                android.widget.Toast.makeText(
-                    itemView.context,
-                    "Меню поста ${post.id}",
-                    android.widget.Toast.LENGTH_SHORT
-                ).show()
+            share.setOnClickListener {
+                listener.onShare(post)
             }
+
             avatar.setOnClickListener {
-                android.widget.Toast.makeText(
-                    itemView.context,
-                    "Профиль автора ${post.author}",
-                    android.widget.Toast.LENGTH_SHORT
-                ).show()
+                listener.onAvatarClick(post)
             }
+            menu.setOnClickListener { view ->
+                showPopupMenu(view, post)
+            }
+        }
+    }
+    private fun showPopupMenu(anchor: View, post: Post) {
+        PopupMenu(anchor.context, anchor).apply {
+            inflate(R.menu.post_menu)
+
+            setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.edit -> {
+                        listener.onEdit(post)
+                        true
+                    }
+                    R.id.remove -> {
+                        listener.onRemove(post)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            show()
         }
     }
 }

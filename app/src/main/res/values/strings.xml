@@ -7,8 +7,14 @@
     <string name="like_description">Like</string>
     <string name="share_description">Share</string>
     <string name="views_description">Views</string>
-    <string name="netology_head">Netology. University of Internet Professions</string>
-    <string name="netology_description">"Hello, this is the new Netology! Netology once started with online marketing intensives. Then, courses on design, development, analytics, and management appeared. We grow ourselves and help students grow: from beginners to confident professionals. "</string>
-    <string name="url_name">New Netology: 4 Career Levels</string>
-    <string name="netology_date">May 21 at 18:36</string>
+
+    <string name="edit_post">Edit</string>
+    <string name="remove_post">Delete</string>
+
+    <string name="post_hint">What you got new?</string>
+    <string name="save_post">Publish</string>
+    <string name="cancel_edit_hint">Edit...</string>
+    <string name="cancel_edit">Cancel</string>
+
+
 </resources>

@@ -9,10 +9,12 @@
     <string name="like_description">Нравится</string>
     <string name="share_description">Поделиться</string>
     <string name="views_description">Просмотры</string>
+    <string name="edit_post">Редактировать</string>
+    <string name="remove_post">Удалить</string>
 
-    <string name="netology_head">Нетология. Университет интернет-профессий</string>
-    <string name="netology_description">Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов.</string>
-    <string name="netology_date">21 мая в 18:36</string>
+    <string name="post_hint">Что у вас нового?</string>
+    <string name="save_post">Опубликовать</string>
+    <string name="cancel_edit_hint">Редактирование...</string>
+    <string name="cancel_edit">Отменить</string>
 
-    <string name="url_name">Новая Нетология: 4 уровня карьеры</string>
 </resources>

@@ -23,7 +23,7 @@
         android:maxLines="1" android:ellipsize="end"
         app:layout_constraintStart_toEndOf="@id/avatar" app:layout_constraintEnd_toStartOf="@id/menu"
         app:layout_constraintTop_toTopOf="@id/avatar" app:layout_constraintBottom_toTopOf="@id/published"
-        android:text="@string/netology_head" android:textColor="@color/black"/>
+        android:text="" android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/published"
@@ -31,7 +31,7 @@
         android:textSize="14sp" android:textColor="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="@id/author" app:layout_constraintEnd_toEndOf="@id/author"
         app:layout_constraintTop_toBottomOf="@id/author" app:layout_constraintBottom_toBottomOf="@id/avatar"
-        android:text="@string/netology_date"/>
+        android:text=""/>
 
     <ImageButton
         android:id="@+id/menu"
@@ -52,7 +52,7 @@
         android:layout_width="0dp" android:layout_height="wrap_content"
         android:layout_marginTop="16dp" android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/barrier"
-        android:text="@string/netology_description"/>
+        android:text=""/>
     <LinearLayout
         android:id="@+id/link_block"
         android:layout_width="0dp" android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:id="@+id/link_title"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:textSize="14sp" android:textStyle="bold" android:textColor="@color/purple_500"
-            android:text="@string/url_name" />
+            android:text="" />
         <TextView
             android:id="@+id/link_url"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
