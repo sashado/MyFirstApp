@@ -9,7 +9,11 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
 
+    <color name="red_500">#FFFF0000</color>
+
+    <color name="gray_600">#FF757575</color>
+
     <color name="background_light">#FFFFF3E0</color>
-    <color name="text_primary">#FF6200EE</color>
-    <color name="text_secondary">#FF757575</color>
+    <color name="text_primary">#FF6200EE</color> <!-- Пока сохраню-->
+    <color name="text_secondary">#FF757575</color> <!-- Пока сохраню-->
 </resources>

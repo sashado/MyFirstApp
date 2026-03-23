@@ -18,24 +18,18 @@ class PostViewHolder(
             published.text = post.published
             content.text = post.content
 
-            likeCount.text = FormatUtils.formatCount(post.likes)
-            shareCount.text = FormatUtils.formatCount(post.shares)
-            viewsCount.text = FormatUtils.formatCount(post.views)
+            like.isChecked = post.likedByMe
+            like.text = FormatUtils.formatCount(post.likes)
 
-            like.setImageResource(
-                if (post.likedByMe)
-                    R.drawable.ic_favorite
-                else
-                    R.drawable.ic_favorite_border
-            )
+            share.text = FormatUtils.formatCount(post.shares)
+            views.text = FormatUtils.formatCount(post.views)
+
             like.setOnClickListener {
                 listener.onLike(post)
             }
-
             share.setOnClickListener {
                 listener.onShare(post)
             }
-
             avatar.setOnClickListener {
                 listener.onAvatarClick(post)
             }
@@ -44,6 +38,7 @@ class PostViewHolder(
             }
         }
     }
+
     private fun showPopupMenu(anchor: View, post: Post) {
         PopupMenu(anchor.context, anchor).apply {
             inflate(R.menu.post_menu)
