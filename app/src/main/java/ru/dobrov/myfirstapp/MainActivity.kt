@@ -1,11 +1,13 @@
 package ru.dobrov.myfirstapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import ru.dobrov.myfirstapp.activity.EditPostContract
 import ru.dobrov.myfirstapp.adapter.OnPostInteractionListener
 import ru.dobrov.myfirstapp.adapter.PostsAdapter
 import ru.dobrov.myfirstapp.databinding.ActivityMainBinding
@@ -22,17 +24,17 @@ class MainActivity : AppCompatActivity() {
             viewModel.likeById(post.id)
         }
         override fun onShare(post: Post) {
+            val shareIntent = Intent().apply { action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, post.content)
+                type = "text/plain" }
+            val chooserIntent = Intent.createChooser(shareIntent, getString(R.string.share_post_via))
+            startActivity(chooserIntent)
             viewModel.shareById(post.id)
-            Toast.makeText(this@MainActivity, "Репост +1", Toast.LENGTH_SHORT).show()
+
         }
         override fun onEdit(post: Post) {
             editingPostId = post.id
-            binding.content.setText(post.content)
-            binding.content.setSelection(binding.content.text.length)
-            binding.content.requestFocus()
-            showKeyboard(binding.content)
-            binding.cancelGroup.visibility = View.VISIBLE
-
+            editPostLauncher.launch(post.content)
         }
         override fun onRemove(post: Post) {
             viewModel.removeById(post.id)
@@ -46,49 +48,29 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val adapter = PostsAdapter(interactionListener)
         binding.list.adapter = adapter
-
         viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
         }
-
-        binding.content.addTextChangedListener { text ->
-            viewModel.changeContent(text.toString())
-        }
-
-        binding.save.setOnClickListener {
-            val text = binding.content.text.toString()
-            if (text.isBlank()) {
-                Toast.makeText(this, "Введите текст поста", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (editingPostId != 0L) {
-                viewModel.saveEditedPost(editingPostId, text)
-                editingPostId = 0L
-            } else {
-                viewModel.changeContent(text)
-                viewModel.save()
-            }
-            binding.content.text.clear()
-            binding.cancelGroup.visibility = View.GONE
-            hideKeyboard(binding.content)
-        }
-
-        binding.cancel.setOnClickListener {
-            editingPostId = 0L
-            binding.content.text.clear()
-            binding.cancelGroup.visibility = View.GONE
-            hideKeyboard(binding.content)
-            viewModel.cancelEdit()
+        binding.fab.setOnClickListener {
+            editPostLauncher.launch(null)
         }
     }
 
+    private val editPostLauncher = registerForActivityResult(EditPostContract()) { result ->
+        if (!result.isNullOrBlank()) {
+            if (editingPostId != 0L) {
+                viewModel.saveEditedPost(editingPostId, result)
+                editingPostId = 0L
+            } else {
+                viewModel.changeContent(result)
+                viewModel.save()
+            }
+        }
+    }
     private fun hideKeyboard(view: View) {
         val imm = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)

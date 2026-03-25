@@ -1,12 +1,19 @@
 package ru.dobrov.myfirstapp.adapter
 
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ru.dobrov.myfirstapp.R
 import ru.dobrov.myfirstapp.databinding.CardPostBinding
+import ru.dobrov.myfirstapp.databinding.ItemVideoBinding
 import ru.dobrov.myfirstapp.dto.Post
 import ru.dobrov.myfirstapp.util.FormatUtils
+import androidx.core.net.toUri
 class PostViewHolder(
     private val binding: CardPostBinding,
     private val listener: OnPostInteractionListener
@@ -20,22 +27,49 @@ class PostViewHolder(
 
             like.isChecked = post.likedByMe
             like.text = FormatUtils.formatCount(post.likes)
-
             share.text = FormatUtils.formatCount(post.shares)
             views.text = FormatUtils.formatCount(post.views)
 
-            like.setOnClickListener {
-                listener.onLike(post)
+            if (post.video.isNullOrBlank()) {
+                videoContainer.removeAllViews()
+                videoContainer.visibility = View.GONE
+            } else {
+                videoContainer.visibility = View.VISIBLE
+                videoContainer.removeAllViews()
+
+                val videoBinding = ItemVideoBinding.inflate(LayoutInflater.from(itemView.context), videoContainer, true)
+
+                videoBinding.videoUrl.text = post.video
+
+                videoContainer.setOnClickListener {
+                    openVideo(post.video)
+                }
             }
-            share.setOnClickListener {
-                listener.onShare(post)
-            }
-            avatar.setOnClickListener {
-                listener.onAvatarClick(post)
-            }
+            like.setOnClickListener { listener.onLike(post) }
+            share.setOnClickListener { listener.onShare(post) }
+            avatar.setOnClickListener { listener.onAvatarClick(post) }
             menu.setOnClickListener { view ->
                 showPopupMenu(view, post)
             }
+        }
+    }
+
+    private fun openVideo(videoUrl: String) {
+        val intent = Intent(Intent.ACTION_VIEW, videoUrl.toUri())
+        val packageManager = itemView.context.packageManager
+        val activities = packageManager.queryIntentActivities(intent, 0)
+        Log.d("VideoIntent", "queryIntentActivities: $activities")
+
+        val resolveInfo = intent.resolveActivity(packageManager)
+        Log.d("VideoIntent", "resolveActivity: $resolveInfo")
+
+        try {
+            if (intent.resolveActivity(itemView.context.packageManager) != null)
+                itemView.context.startActivity(intent)
+            else
+                Toast.makeText(itemView.context, R.string.error_no_video_app, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(itemView.context, R.string.error_cannot_open_video, Toast.LENGTH_SHORT).show()
         }
     }
 
