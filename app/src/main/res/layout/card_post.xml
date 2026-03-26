@@ -93,37 +93,6 @@
 
 
         <LinearLayout
-            android:id="@+id/link_block"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/circle_border_layout"
-            android:backgroundTint="#1A000000"
-            android:orientation="vertical"
-            android:padding="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/videoContainer" >
-
-            <TextView
-                android:id="@+id/link_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/purple_500"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                tools:text="Заголовок ссылки" />
-
-            <TextView
-                android:id="@+id/link_url"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="netology.ru"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/actions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -132,7 +101,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/link_block">
+            app:layout_constraintTop_toBottomOf="@id/videoContainer">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/like"

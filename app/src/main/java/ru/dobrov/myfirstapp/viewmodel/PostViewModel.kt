@@ -4,16 +4,21 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ru.dobrov.myfirstapp.db.AppDb
 import ru.dobrov.myfirstapp.dto.Post
 import ru.dobrov.myfirstapp.repository.PostRepository
-import ru.dobrov.myfirstapp.repository.PostRepositoryFileImpl
+import ru.dobrov.myfirstapp.repository.PostRepositorySQLiteImpl
+import ru.dobrov.myfirstapp.util.FormatUtils
+
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: PostRepository = PostRepositoryFileImpl(application)
+    private val repository: PostRepository = PostRepositorySQLiteImpl(
+        AppDb.getInstance(application).postDao
+    )
     private val empty = Post(
         id = 0,
-        author = "",
+        author = "Я", //Поставил значения заглушки
         content = "",
-        published = ""
+        published = FormatUtils.currentDateTime() //Поставил значения заглушки
     )
     val data: LiveData<List<Post>> = repository.getAll()
     private val _edited = MutableLiveData(empty)

@@ -26,4 +26,7 @@ object FormatUtils {
         val format = SimpleDateFormat("d MMM в HH:mm", Locale("ru"))
         return format.format(date)
     }
+    fun currentDateTime(): String {
+        return formatDate(Date())
+    }
 }
