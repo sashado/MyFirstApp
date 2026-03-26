@@ -32,18 +32,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         _editingMode.value = false
     }
 
-    fun edit(post: Post) {
-        _edited.value = post
-        _editingMode.value = true
-    }
-
     fun changeContent(content: String) {
         val text = content.trim()
         _edited.value?.let { post -> if (post.content != text) _edited.value = post.copy(content = text) }
-    }
-    fun cancelEdit() {
-        _edited.value = empty
-        _editingMode.value = false
     }
     fun saveEditedPost(postId: Long, newContent: String) {
         val currentPosts = data.value ?: return

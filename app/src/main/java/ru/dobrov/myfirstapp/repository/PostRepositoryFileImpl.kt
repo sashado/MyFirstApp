@@ -28,14 +28,13 @@ class PostRepositoryFileImpl(
     override fun getAll(): LiveData<List<Post>> = _data
     override fun likeById(id: Long) {
         posts = posts.map { post ->
-            if (post.id == id) {
+            if (post.id == id)
                 post.copy(
                     likedByMe = !post.likedByMe,
                     likes = if (post.likedByMe) post.likes - 1 else post.likes + 1
                 )
-            } else {
+            else
                 post
-            }
         }
         _data.value = posts
         saveData()

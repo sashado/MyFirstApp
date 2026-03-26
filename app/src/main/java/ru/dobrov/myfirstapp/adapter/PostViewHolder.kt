@@ -45,13 +45,34 @@ class PostViewHolder(
                     openVideo(post.video)
                 }
             }
-            like.setOnClickListener { listener.onLike(post) }
-            share.setOnClickListener { listener.onShare(post) }
-            avatar.setOnClickListener { listener.onAvatarClick(post) }
+            root.setOnClickListener {
+                listener.onPostClick(post)
+            }
+
+            like.setOnClickListener {
+                listener.onLike(post)
+                it.stopPropagation()
+            }
+
+            share.setOnClickListener {
+                listener.onShare(post)
+                it.stopPropagation()
+            }
+
+            avatar.setOnClickListener {
+                listener.onAvatarClick(post)
+                it.stopPropagation()
+            }
+
             menu.setOnClickListener { view ->
                 showPopupMenu(view, post)
             }
+
         }
+    }
+    fun View.stopPropagation() {
+        isClickable = true
+        setOnClickListener {}
     }
 
     private fun openVideo(videoUrl: String) {
